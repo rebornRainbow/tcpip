@@ -2,7 +2,8 @@
 #define SPONGE_LIBSPONGE_BYTE_STREAM_HH
 
 #include <string>
-
+#include <deque>
+#include <cstdlib>
 //! \brief An in-order byte stream.
 
 //! Bytes are written on the "input" side and read from the "output"
@@ -11,6 +12,13 @@
 class ByteStream {
   private:
     // Your code here -- add private members as necessary.
+    size_t _room = 0;
+
+    size_t wi = 0,ri = 0;
+    char *buffer = nullptr;
+
+    size_t w_n = 0,r_n = 0;
+    bool _input_end = false;
 
     // Hint: This doesn't need to be a sophisticated data structure at
     // all, but if any of your tests are taking longer than a second,
@@ -29,6 +37,10 @@ class ByteStream {
     //! Write a string of bytes into the stream. Write as many
     //! as will fit, and return how many were written.
     //! \returns the number of bytes accepted into the stream
+    
+    //写入缓冲区的助手，一个
+    void write_helper(char tem);
+
     size_t write(const std::string &data);
 
     //! \returns the number of additional bytes that the stream has space for
